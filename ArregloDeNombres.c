@@ -64,13 +64,13 @@ void mostrarPersonas(char * V[]){
     }
 }
 
-int buscarNombrePorPalabra(char *V[], char *palabra) { // Cambiamos void por int
+int buscarNombrePorPalabra(char *V[], char * palabra) { // 
     for (int i = 0; i < 5; i++) {
         if (strstr(V[i], palabra) != NULL) {
-            return i; // Retornamos la posición (un número entero)
+            return i; // 
         }
     }
-    return -1; // Si llegó acá es porque no encontró nada. Retornamos -1.
+    return -1; // 
 }
 
 void buscarNombrePorID(int ID, char * V[]){
