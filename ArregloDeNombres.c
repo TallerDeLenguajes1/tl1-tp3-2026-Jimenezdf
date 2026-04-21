@@ -24,23 +24,37 @@ int main (){
 
     mostrarPersonas(V);
 
+    printf("----------- Busqueda por ID (posicion) o por Nombre (parcial o completo) -------------\n");
+    int eleccion;
+    do
+    {
+        printf("    Para busqueda por ID presione -------->   1\n");
+        printf("    Para busqueda por Nombre presione ---->   2\n");
+        scanf("%d", &eleccion);
+
+    } while (eleccion != 1 && eleccion != 2);
+    if(eleccion == 1){
     do{
         printf("Ingrese un ID (1-5): \n");
         scanf("%i", &ID);
         }while(ID<0 || ID>5);
-        buscarNombre(ID, V);
+        buscarNombrePorID(ID, V);
+    }
+    else{ 
+        printf("Ingrese el nombre que desea buscar: ");
+         fflush(stdin);
+        scanf("%s", palabra);
 
-    printf("Ingrese el nombre que desea buscar: ");
-    fflush(stdin);
-    scanf("%s", palabra);
+        int resultado = buscarNombrePorPalabra(V, palabra);
 
-int resultado = buscarNombre(V, palabra);
+        if (resultado == -1) {
+            printf("No se encontro nada, codigo de error: %d", resultado);
+         } else {
+             printf("nombre encontrado: %s", V[resultado]);
+         }
+    }
 
-if (resultado == -1) {
-    printf("No se encontro nada, codigo de error: %d", resultado);
-} else {
-    printf("nombre encontrado: %s", V[resultado]);
-}
+return 0;
 }
 
 void mostrarPersonas(char * V[]){
