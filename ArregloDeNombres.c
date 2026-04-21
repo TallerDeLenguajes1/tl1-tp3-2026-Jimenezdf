@@ -3,10 +3,12 @@
 #include <string.h>
 
 void mostrarPersonas(char * V[]);
-int buscarNombre(char * V[], char palabra[]);
+void buscarNombrePorID(int ID, char * V[]);
+int buscarNombrePorPalabra(char * V[], char palabra[]);
 int main (){
     char buff[50];
     char * V[5];
+    int ID;
     char palabra[50];
     printf("Ingrese 5 nombres:\n");
     for (int i=0;i<5;i++){
@@ -19,7 +21,14 @@ int main (){
         
     }
     printf("\n ----Nombres ingresados----\n");
+
     mostrarPersonas(V);
+
+    do{
+        printf("Ingrese un ID (1-5): \n");
+        scanf("%i", &ID);
+        }while(ID<0 || ID>5);
+        buscarNombre(ID, V);
 
     printf("Ingrese el nombre que desea buscar: ");
     fflush(stdin);
@@ -41,7 +50,7 @@ void mostrarPersonas(char * V[]){
     }
 }
 
-int buscarNombre(char *V[], char *palabra) { // Cambiamos void por int
+int buscarNombrePorPalabra(char *V[], char *palabra) { // Cambiamos void por int
     for (int i = 0; i < 5; i++) {
         if (strstr(V[i], palabra) != NULL) {
             return i; // Retornamos la posición (un número entero)
@@ -49,3 +58,12 @@ int buscarNombre(char *V[], char *palabra) { // Cambiamos void por int
     }
     return -1; // Si llegó acá es porque no encontró nada. Retornamos -1.
 }
+
+void buscarNombrePorID(int ID, char * V[]){
+        if((ID - 1) >=0 && (ID - 1)<5){
+            printf("El nombre con ID %i es %s", ID, V[ID-1]);
+        }else{
+            printf("No se encontro ningun nombre con ese ID");
+        }
+    }
+    
