@@ -3,7 +3,7 @@
 #include <string.h>
 
 void mostrarPersonas(char * V[]);
-void buscarNombre(char * V[], char palabra[]);
+int buscarNombre(char * V[], char palabra[]);
 int main (){
     char buff[50];
     char * V[5];
@@ -25,9 +25,13 @@ int main (){
     fflush(stdin);
     scanf("%s", palabra);
 
-    
-    buscarNombre(V, palabra);
+int resultado = buscarNombre(V, palabra);
 
+if (resultado == -1) {
+    printf("No se encontro nada, codigo de error: %d", resultado);
+} else {
+    printf("nombre encontrado: %s", V[resultado]);
+}
 }
 
 void mostrarPersonas(char * V[]){
@@ -37,16 +41,11 @@ void mostrarPersonas(char * V[]){
     }
 }
 
-void buscarNombre(char * V[], char palabra[]){
-    int aux=-1;
-    
-    for(int i=0;i<5;i++){
-        if (strstr(V[i], palabra) != NULL){
-           printf("Se encontro el nombre %s", V[i]); 
-           aux=1;
+int buscarNombre(char *V[], char *palabra) { // Cambiamos void por int
+    for (int i = 0; i < 5; i++) {
+        if (strstr(V[i], palabra) != NULL) {
+            return i; // Retornamos la posición (un número entero)
         }
     }
-    if (aux== -1){
-        printf("-1");
-    }
+    return -1; // Si llegó acá es porque no encontró nada. Retornamos -1.
 }
