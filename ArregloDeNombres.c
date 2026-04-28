@@ -2,16 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-void mostrarPersonas(char * V[]);
-void buscarNombrePorID(int ID, char * V[]);
-int buscarNombrePorPalabra(char * V[], char palabra[]);
+void mostrarPersonas(char ** V, int cant);
+void buscarNombrePorID(int ID, char ** V, int cant);
+int buscarNombrePorPalabra(char ** V, char * palabra, int cant);
+void liberarMemoria(char **V, int cant);
 int main (){
     char buff[50];
-    char * V[5];
+    int cantNom;
     int ID;
     char palabra[50];
-    printf("Ingrese 5 nombres:\n");
-    for (int i=0;i<5;i++){
+
+    printf("Ingrese una cantidad de nombres:\n");
+    scanf("%i", &cantNom);
+    char ** V = (char**) malloc(sizeof(char*) * cantNom);
+
+    for (int i=0;i<cantNom;i++){
         do{
         fflush(stdin);
         fgets(buff,sizeof(buff), stdin);
@@ -23,7 +28,7 @@ int main (){
     }
     printf("\n ----Nombres ingresados----\n");
 
-    mostrarPersonas(V);
+    mostrarPersonas(V,cantNom);
 
     printf("----------- Busqueda por ID (posicion) o por Nombre (parcial o completo) -------------\n");
     int eleccion;
@@ -38,15 +43,15 @@ int main (){
     do{
         printf("Ingrese un ID (1-5): \n");
         scanf("%i", &ID);
-        }while(ID<0 || ID>5);
-        buscarNombrePorID(ID, V);
+        }while(ID<0 || ID>cantNom);
+        buscarNombrePorID(ID, V, cantNom);
     }
     else{ 
         printf("Ingrese el nombre que desea buscar: ");
          fflush(stdin);
         scanf("%s", palabra);
 
-        int resultado = buscarNombrePorPalabra(V, palabra);
+        int resultado = buscarNombrePorPalabra(V, palabra, cantNom);
 
         if (resultado == -1) {
             printf("No se encontro nada, codigo de error: %d", resultado);
@@ -54,19 +59,18 @@ int main (){
              printf("nombre encontrado: %s", V[resultado]);
          }
     }
-
+liberarMemoria(V,cantNom);
 return 0;
 }
 
-void mostrarPersonas(char * V[]){
-    int cantidad=5;
-    for (int i=0;i<cantidad;i++){
+void mostrarPersonas(char ** V, int cant){
+    for (int i=0;i<cant;i++){
         puts(V[i]);
     }
 }
 
-int buscarNombrePorPalabra(char *V[], char * palabra) { // 
-    for (int i = 0; i < 5; i++) {
+int buscarNombrePorPalabra(char ** V, char * palabra, int cant) { 
+    for (int i = 0; i < cant; i++) {
         if (strstr(V[i], palabra) != NULL) {
             return i; // 
         }
@@ -74,11 +78,18 @@ int buscarNombrePorPalabra(char *V[], char * palabra) { //
     return -1; // 
 }
 
-void buscarNombrePorID(int ID, char * V[]){
-        if((ID - 1) >=0 && (ID - 1)<5){
+void buscarNombrePorID(int ID, char ** V, int cant){
+        if((ID - 1) >=0 && (ID - 1)<cant){
             printf("El nombre con ID %i es %s", ID, V[ID-1]);
         }else{
             printf("No se encontro ningun nombre con ese ID");
         }
     }
     
+void liberarMemoria(char ** V, int cant){
+for(int i=0;i<cant;i++){
+    free(V[i]);
+}
+free(V);
+
+}
