@@ -12,8 +12,9 @@ int main (){
     char palabra[50];
     printf("Ingrese 5 nombres:\n");
     for (int i=0;i<5;i++){
-        do{fflush(stdin);
-        gets(buff);
+        do{
+        fflush(stdin);
+        fgets(buff,sizeof(buff), stdin);
         }while(strlen(buff)==0);
         int longNom = strlen(buff);
         V[i] = (char *) malloc((sizeof(char) * longNom) + 1);
