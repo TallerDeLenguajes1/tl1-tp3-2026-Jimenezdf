@@ -21,7 +21,7 @@ Producto *Productos;   //El tamaño de este arreglo depende de la variable
 }Cliente;
 
 float costoTotal(Producto p);
-
+void liberarMemoria(Cliente * Clientes, int cant);
 int main(){
 
 srand(time(NULL));
@@ -81,6 +81,7 @@ for(int i=0;i<cantClientes;i++){
     printf("\n-------------------\n");
 }
 
+liberarMemoria(Clientes, cantClientes);
 
 return 0;
 
@@ -90,4 +91,12 @@ return 0;
 float costoTotal(Producto p){
     float Total = p.Cantidad * p.PrecioUnitario;
     return Total;
+}
+
+void liberarMemoria(Cliente * Clientes, int cant){
+    for(int i=0;i<cant;i++){
+    free(Clientes[i].NombreCliente);
+    free(Clientes[i].Productos);
+    }
+free(Clientes);
 }
