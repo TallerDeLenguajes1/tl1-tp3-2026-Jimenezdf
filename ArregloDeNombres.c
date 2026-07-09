@@ -6,6 +6,7 @@ void mostrarPersonas(char ** V, int cant);
 void buscarNombrePorID(int ID, char ** V, int cant);
 int buscarNombrePorPalabra(char ** V, char * palabra, int cant);
 void liberarMemoria(char **V, int cant);
+void limpiarBuffer();
 int main (){
     char buff[50];
     int cantNom;
@@ -14,8 +15,9 @@ int main (){
 
     printf("Ingrese una cantidad de nombres:\n");
     scanf("%i", &cantNom);
+    limpiarBuffer();
     char ** V = (char**) malloc(sizeof(char*) * cantNom);
-
+    printf("Ingrese los nombres:\n");
     for (int i=0;i<cantNom;i++){
         do{
         fflush(stdin);
@@ -37,12 +39,14 @@ int main (){
         printf("    Para busqueda por ID presione -------->   1\n");
         printf("    Para busqueda por Nombre presione ---->   2\n");
         scanf("%d", &eleccion);
+        limpiarBuffer();
 
     } while (eleccion != 1 && eleccion != 2);
     if(eleccion == 1){
     do{
         printf("Ingrese un ID (1-5): \n");
         scanf("%i", &ID);
+        limpiarBuffer();
         }while(ID<0 || ID>cantNom);
         buscarNombrePorID(ID, V, cantNom);
     }
@@ -92,4 +96,9 @@ for(int i=0;i<cant;i++){
 }
 free(V);
 
+}
+
+void limpiarBuffer(){
+    int c;
+    while((c=getchar()) != '\n' && c!= EOF) {}
 }
